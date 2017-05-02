@@ -32,4 +32,14 @@
         android:layout_marginTop="116dp"
         android:text="Button" />
 
+    <TextView
+        android:id="@+id/showUsrname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/singout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="77dp"
+        android:text="TextView"
+        android:textSize="24sp" />
+
 </RelativeLayout>

@@ -52,6 +52,7 @@ public class SingUpPage extends AppCompatActivity {
                                     .setDisplayName(username).build();
                             firebaseAuth.getCurrentUser().updateProfile(profileUpdates);
                             Intent intent =new Intent(getApplicationContext(),UserProfilePage.class);
+                            intent.putExtra("username",username);
                             startActivity(intent);
                             finish();
                         }

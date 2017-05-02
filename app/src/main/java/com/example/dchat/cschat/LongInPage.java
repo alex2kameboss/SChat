@@ -57,6 +57,7 @@ public class LongInPage extends AppCompatActivity {
         if(firebaseAuth.getCurrentUser()!=null)
         {
             Intent intent =new Intent(getApplicationContext(),MainChatPage.class);
+            intent.putExtra("username",firebaseAuth.getCurrentUser().getDisplayName());
             startActivity(intent);
             finish();
         }
@@ -74,7 +75,8 @@ public class LongInPage extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful())
                         {
-                            Intent intent=new Intent(getApplicationContext(),UserProfilePage.class);
+                            Intent intent=new Intent(getApplicationContext(),MainChatPage.class);
+                            intent.putExtra("username",firebaseAuth.getCurrentUser().getDisplayName());
                             startActivity(intent);
                             finish();
                         }

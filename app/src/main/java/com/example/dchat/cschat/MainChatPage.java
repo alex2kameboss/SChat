@@ -16,6 +16,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
@@ -36,6 +38,8 @@ public class MainChatPage extends AppCompatActivity {
     private CircleImageView userview;
     private FirebaseAuth firebaseAuth;
     private StorageReference userPhoto;
+    private String username;
+    private TextView view;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,7 +47,11 @@ public class MainChatPage extends AppCompatActivity {
         firebaseAuth=FirebaseAuth.getInstance();
         userview=(CircleImageView)findViewById(R.id.mainuserPhoto);
         singout=(Button)findViewById(R.id.singout);
-        userPhoto= FirebaseStorage.getInstance().getReference().child("ProfilesPhoto/"+firebaseAuth.getCurrentUser().getDisplayName()+".png");
+        Intent intent = getIntent();
+        username=intent.getStringExtra("username");
+        userPhoto= FirebaseStorage.getInstance().getReference().child("ProfilesPhoto/"+username+".png");
+        view=(TextView)findViewById(R.id.showUsrname);
+        view.setText(username);
         Glide.with(getApplicationContext())
                 .using(new FirebaseImageLoader())
                 .load(userPhoto)

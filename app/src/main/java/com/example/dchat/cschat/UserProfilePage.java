@@ -39,6 +39,7 @@ public class UserProfilePage extends AppCompatActivity {
     private int PICK_IMAGE_REQUEST = 1;
     private TextView userName;
     private StorageReference mStorageRef;
+    private String username;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,7 +53,9 @@ public class UserProfilePage extends AppCompatActivity {
         mStorageRef = FirebaseStorage.getInstance().getReference();
         databaseReference= FirebaseDatabase.getInstance().getReference().child("Users");
         userName=(TextView)findViewById(R.id.userName);
-        userName.setText(firebaseAuth.getCurrentUser().getDisplayName());
+        Intent intent = getIntent();
+        username=intent.getStringExtra("username");
+        userName.setText(username);
         selectPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,7 +72,7 @@ public class UserProfilePage extends AppCompatActivity {
             @SuppressWarnings("VisibleForTests")
             public void onClick(View v) {
                 String phone=phoneNumber.getText().toString();
-                StorageReference storageReference = mdatabase.getReference().child("ProfilesPhoto/"+firebaseAuth.getCurrentUser().getDisplayName()+".png");
+                StorageReference storageReference = mdatabase.getReference().child("ProfilesPhoto/"+username+".png");
                 UploadTask uploadTask= storageReference.putFile(uri);
                 uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
@@ -81,9 +84,10 @@ public class UserProfilePage extends AppCompatActivity {
                     }
                 });
                 HashMap<String, Object> result = new HashMap<>();
-                result.put(phone, firebaseAuth.getCurrentUser().getDisplayName());
+                result.put(phone, username);
                 databaseReference.updateChildren(result);
                 Intent intent=new Intent(getApplicationContext(),MainChatPage.class);
+                intent.putExtra("username",username);
                 startActivity(intent);
                 finish();
             }
